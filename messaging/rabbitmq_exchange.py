@@ -203,7 +203,8 @@ def main():
         elif module.params['state'] == 'absent':
             r = requests.delete( url, auth = (module.params['login_user'],module.params['login_password']))
 
-        if r.status_code == 204:
+        # response status code is 201 since RabbitMq 3.6.7
+        if r.status_code == 204 or r.status_code == 201:
             module.exit_json(
                 changed = True,
                 name = module.params['name']
